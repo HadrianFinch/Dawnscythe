@@ -2,11 +2,11 @@
 import time
 import math
 import board
-import neopixel
 import digitalio
+import neopixel
 
 pixel_pin = board.EXTERNAL_NEOPIXELS
-num_pixels = 25
+num_pixels = 22
 
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
 
@@ -15,20 +15,25 @@ standby_brightness = 0.3
 
 blast_color = (255, 255, 255)
 blast_brightness = 1
+blast_size = 2
 
-circle_pixel_range = 15
-circle_color = (0, 100, 255)
-circle_brightness = 0.4
+circle_pixel_range = 11
+circle_color = (255, 90, 0)
+circle_brightness = 0.8
 
 circle_index = 0
+
+center_front_pixel = 5
+center_back_pixel = 16
+
 
 
 def PowerOn():
     for c in range(9):
         for p in range(num_pixels):
-            if (abs(p - 7) < c):
+            if (abs(p - center_front_pixel) < c):
                 pixels[p] = standby_color
-            if (abs(p - 19.5) < c):
+            if (abs(p - center_back_pixel) < c):
                 pixels[p] = standby_color
                 
         pixels.brightness = ((standby_brightness / 8) * c)
@@ -39,9 +44,9 @@ def PowerOn():
 def PowerOff():
     for c in range(9):
         for p in range(num_pixels):
-            if (abs(p - 7) < c):
+            if (abs(p - center_front_pixel) < c):
                 pixels[p] = (0, 0, 0)
-            if (abs(p - 19.5) < c):
+            if (abs(p - center_back_pixel) < c):
                 pixels[p] = (0, 0, 0)
                 
         pixels.brightness = ((standby_brightness / 8) * (8 - c))
@@ -56,12 +61,16 @@ def Standby():
                 
         
 def Blast():
-    pixels.brightness = blast_brightness
-    for p in range(4, 10):
-        pixels[p] = blast_color
-    pixels.show()
+    BlastOn()
     time.sleep(0.1)
     Standby()
+    
+def BlastOn():
+    pixels.brightness = blast_brightness
+    for p in range(center_front_pixel - blast_size, center_front_pixel + blast_size + 1):
+        pixels[p] = blast_color
+    pixels.show()
+    
     
 def Debug():
     for p in range(num_pixels):

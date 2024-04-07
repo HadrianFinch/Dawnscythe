@@ -7,7 +7,6 @@ import busio
 import adafruit_lis3dh
 
 import audiocore
-import board
 import audiobusio
 
 
@@ -25,9 +24,9 @@ enable = digitalio.DigitalInOut(board.EXTERNAL_POWER)
 enable.direction = digitalio.Direction.OUTPUT
 enable.value = True
 
-powerpin = digitalio.DigitalInOut(board.D9)
+powerpin = digitalio.DigitalInOut(board.D13)
 powerpin.direction = digitalio.Direction.OUTPUT
-powerpin.value = True
+powerpin.value = False
 
 handleSensor = digitalio.DigitalInOut(board.D24)
 handleSensor.direction = digitalio.Direction.INPUT
@@ -121,6 +120,7 @@ def Update():
             powered_on = False
             lights.PowerOff()
             enable.value = False
+            powerpin.value = False
             
             print("powered off. Low power mode enabled")
         else:
@@ -129,6 +129,7 @@ def Update():
     if (handleSensor.value and (not powered_on)):
         powered_on = True
         enable.value = True
+        powerpin.value = True
         lights.PowerOn()
     
             
