@@ -1,0 +1,15 @@
+{
+    "python.languageServer": "Pylance",
+    "python.linting.pylintEnabled": false,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none",
+        "reportShadowedImports": "none"
+    },
+    "python.analysis.extraPaths": [
+        "",
+        "/Users/hadrianfinch/.vscode/extensions/joedevivo.vscode-circuitpython-0.2.0-darwin-arm64/stubs",
+        "/Users/hadrianfinch/Library/Application Support/Code/User/globalStorage/joedevivo.vscode-circuitpython/bundle/20240402/adafruit-circuitpython-bundle-8.x-mpy-20240402/lib"
+    ],
+    "circuitpython.board.version": "8.1.0"
+}
